@@ -17,8 +17,8 @@
     <script>
         function initialize(){
             game = new Game();
-            ship = new Ship("./smallBall.png", 50, 50, game.canvas.width, game.canvas.height);
-            ball = new Ball("./smallBall.png", 30, 30, game.canvas.width, game.canvas.height);
+            ship = new Ship("./pirateShip1.png", 65, 150, game.canvas.width, game.canvas.height);
+            ball = new Ball("./smallBall.png", 10, 10, game.canvas.width, game.canvas.height);
             game.addSprite(ship);
             game.addSprite(ball);
             game.start();
@@ -33,20 +33,27 @@
 
         function Ship(imageUrl, w, h, cW, cH){
             tShip = new Sprite(imageUrl, w, h, cW, cH);
-
-            //tShip.collisionStyle = "BOX";
+            tShip.setPosition(200, 200);
             tShip.checkKeys = function(){
-                if(keysPressed[K_A]){
-                    tShip.x -= 10;
+                if(keysPressed[K_UP]){
+                    if(this.speed < 6){
+                        tShip.addForceVector(this.getMotionAngle(), 0.3);
+                    }
                 }
-                if(keysPressed[K_D]){
-                    tShip.x += 10;
+                if(keysPressed[K_RIGHT]){
+                    if(this.speed > 1.5){
+                        tShip.addForceVector(this.getMotionAngle() + 90, 0.1);
+                    }
                 }
-                if(keysPressed[K_W]){
-                    tShip.y -= 10;
+                if(keysPressed[K_LEFT]){
+                    if(this.speed > 1.5){
+                        tShip.addForceVector(this.getMotionAngle() - 90, 0.1);
+                    }
                 }
-                if(keysPressed[K_S]){
-                    tShip.y += 10;
+                if(keysPressed[K_DOWN]){
+                    if(this.speed > 1){
+                        tShip.addForceVector(this.getMotionAngle() - 180, 0.3);
+                    }
                 }
             };
             return tShip;
@@ -56,17 +63,8 @@
             tBall = new Sprite(imageUrl, w, h, cW, cH);
 
             tBall.checkKeys = function(){
-                if(keysPressed[K_LEFT]){
-                    tBall.x -= 10;
-                }
-                if(keysPressed[K_RIGHT]){
-                    tBall.x += 10;
-                }
-                if(keysPressed[K_UP]){
-                    tBall.y -= 10;
-                }
-                if(keysPressed[K_DOWN]){
-                    tBall.y += 10;
+                if(keysPressed[K_SPACE]){
+
                 }
             };
             return tBall;

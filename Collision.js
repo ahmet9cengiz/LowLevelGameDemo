@@ -19,7 +19,7 @@ function CircleCollision(x, y, width, height){
     this.distanceFromCenterToDownLeft = distanceBetweenDots(x, y, downLeftX, downLeftY);
     this.distanceFromCenterToDownRight = distanceBetweenDots(x, y, downRightX, downRightY);
 
-    this.rightWall = x - wOver2;
+    this.rightWall = x + wOver2;
     this.leftWall = x - wOver2;
     this.upWall = y - hOver2;
     this.downWall = y + hOver2;
@@ -48,7 +48,7 @@ function BoxCollision(x, y, width, height){
     this.distanceFromCenterToDownLeft = distanceBetweenDots(x, y, downLeftX, downLeftY);
     this.distanceFromCenterToDownRight = distanceBetweenDots(x, y, downRightX, downRightY);
 
-    this.rightWall = x - wOver2;
+    this.rightWall = x + wOver2;
     this.leftWall = x - wOver2;
     this.upWall = y - hOver2;
     this.downWall = y + hOver2;

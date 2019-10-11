@@ -5,8 +5,8 @@
 
 function Game(){
     this.canvas = document.createElement("canvas");
-    this.canvas.width = 700;
-    this.canvas.height = 600;
+    this.canvas.width = 1000;
+    this.canvas.height = 700;
     this.canvas.style.backgroundColor = "lightblue";
     this.context = this.canvas.getContext("2d");
     document.body.appendChild(this.canvas);
@@ -14,21 +14,30 @@ function Game(){
 
     this.spriteArray = [];
 
+    this.enemySpriteArray = [];
+
     this.addSprite = function(sprite){
         this.spriteArray.push(sprite);
+
     };
 
+    this.addEnemySprite = function(sprite){
+        this.enemySpriteArray.push(sprite);
+    };
+    
     this.drawSprites = function(){
-        this.context.save();
+
         for(var i=0; i<this.spriteArray.length; i++){
             if(this.spriteArray[i].visible){
+                this.context.save();
                 //TODO Ask Andy
-                //this.context.translate(this.spriteArray[i].x, this.spriteArray[i].y);
-                //this.context.rotate(this.spriteArray[i].imageAngle);
+                this.context.translate(this.spriteArray[i].x, this.spriteArray[i].y);
+                this.context.rotate(this.spriteArray[i].imageAngle + Math.PI/2);
                 this.context.drawImage(this.spriteArray[i].image,
-                    this.spriteArray[i].x - this.spriteArray[i].width/2,
-                    this.spriteArray[i].y - this.spriteArray[i].height/2,
+                    0 - this.spriteArray[i].width/2,
+                    0 - this.spriteArray[i].height/2,
                     this.spriteArray[i].width, this.spriteArray[i].height);
+                this.context.restore();
             }
         }
         this.context.restore();
@@ -108,7 +117,7 @@ function Game(){
     this.checkSpriteCollisions = function(){
         for(var i=1; i<this.spriteArray.length; i++){
             if(this.checkCollisionBetween(this.spriteArray[0], this.spriteArray[i])){
-                console.log("COLLIDE");
+                this.spriteArray[0].hide();
             }
         }
     }
