@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html lang = "en">
+<head>
+    <title>Demo</title>
+    <meta charset = "UTF-8" />
+    <style type = "text/css">
+        canvas{
+            border:solid 2px #6c6a16;
+        }
+    </style>
+    <script src = "constants.js"></script>
+    <script src = "Game.js"></script>
+    <script src = "Sprite.js"></script>
+
+
+    <script>
+        function initialize(){
+            game = new Game();
+            ball = new Ball("./ball.png", 100, 100, game.canvas.width, game.canvas.height);
+            game.addSprite(ball);
+            game.start();
+        }
+
+        function update(){
+            game.clear();
+            ball.checkKeys();
+            game.updateSprites();
+        }
+
+
+        function Ball(){
+            tBall = new Sprite("./ball.png", 100, 100, game.canvas.width, game.canvas.height);
+
+            tBall.checkKeys = function(){
+                if(keysPressed[K_LEFT]){
+                    tBall.x -= 10;
+                }
+                if(keysPressed[K_RIGHT]){
+                    tBall.x += 10;
+                }
+                if(keysPressed[K_UP]){
+                    tBall.y -= 10;
+                }
+                if(keysPressed[K_DOWN]){
+                    tBall.y += 10;
+                }
+            };
+            return tBall;
+        }
+    </script>
+</head>
+
+<body onload = "initialize()">
+
+</body>
+</html>
