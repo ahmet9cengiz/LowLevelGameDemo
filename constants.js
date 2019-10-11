@@ -8,6 +8,13 @@ CONTINUE = 3;//will use for the orbital movement since they are gonna come back)
 STOP = 4;// stop when you hit the walls
 
 /**
+ * Collision Values:
+ */
+CIRCLE = 0;
+BOX = 1;
+
+
+/**
  * Keyboard Array:
  */
 keysPressed = new Array(256);
@@ -27,3 +34,10 @@ K_LEFT = 37; K_RIGHT = 39; K_UP = 38; K_DOWN = 40; K_SPACE = 32;
 K_ESC = 27; K_PGUP = 33; K_PGDOWN = 34; K_HOME = 36; K_END = 35;
 K_0 = 48; K_1 = 49; K_2 = 50; K_3 = 51; K_4 = 52; K_5 = 53;
 K_6 = 54; K_7 = 55; K_8 = 56; K_9 = 57;
+
+/**
+ * Global Functions
+ */
+distanceBetweenDots = function(x1, y1, x2, y2){
+    return Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
+};

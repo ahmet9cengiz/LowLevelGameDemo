@@ -15,12 +15,25 @@ function Sprite(imageUrl, width, height, canvasW, canvasH){
     this.canvasW = canvasW;
     this.canvasH = canvasH;
     this.imageAngle = 0;
-    this.x = 0;
-    this.y = 0;
-    this.dx = 5;
-    this.dy = 3;
+    this.x = 5;
+    this.y = 5;
+    this.dx = 0;
+    this.dy = 0;
     this.visible = true;
     this.boundaryStyle = WRAP;
+    this.speed = 0;
+    this.motionAngle = 0;
+    this.collisionStyle = CIRCLE;
+
+    if(this.collisionStyle === CIRCLE){
+        this.collision = new CircleCollision(this.x, this.y, this.width, this.height);
+    }
+    else if(this.collisionStyle === BOX){
+        this.collision = new BoxCollision(this.x, this.y, this.width, this.height);
+    }
+    else{
+        //DO NOTHING
+    }
 
     this.setImageSize = function (width, height) {
         this.width = width;
@@ -46,10 +59,12 @@ function Sprite(imageUrl, width, height, canvasW, canvasH){
 
     this.setDx = function (dx) {
         this.dx = dx;
+        this.calculateMotionAngle();
     };
 
     this.setDy = function (dy) {
         this.dy = dy;
+        this.calculateMotionAngle();
     };
 
     this.updatePosition = function(){
@@ -166,6 +181,39 @@ function Sprite(imageUrl, width, height, canvasW, canvasH){
         if (passRight || passLeft || passUp || passDown) {
             this.hide();
         }
+    };
+
+    /**
+     * Get angle in degrees and convert it to radians and return it
+     */
+    this.convertDegreeToRadian = function (angleInDegrees) {
+        angleInDegrees -= 90;   //offset degree by 90 to get the correct direction in radians
+        var angleInRadians = (angleInDegrees * Math.PI) / 180;    //convert degrees into radians
+        return angleInRadians;
+    };
+
+    this.setImageAngle = function (angleInDegrees) {
+        this.imageAngle = this.convertDegreeToRadian(angleInDegrees);
+    };
+
+    //TODO Ask Andy
+    this.addForceVector = function(forceAngle, addSpeed){
+        forceAngle = this.convertDegreeToRadian();
+
+        this.dx += addSpeed * Math.cos(forceAngle);
+        this.dy += addSpeed * Math.sin(forceAngle);
+
+        this.calculateSpeed();
+        this.calculateMotionAngle();
+    };
+
+    this.calculateMotionAngle = function(){
+        //convert radian to degrees
+        this.motionAngle = (Math.atan2(this.dy,this.dx)*180/Math.PI) +90;
+    };
+
+    this.calculateSpeed = function(){
+        this.speed = Math.sqrt(this.dx*this.dx + this.dy*this.dy);
     };
 
 

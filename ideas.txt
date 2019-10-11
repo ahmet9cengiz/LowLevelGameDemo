@@ -1,0 +1,2 @@
+We might change the calculation for circleCollision radius in order to make it faster:
+    radius = max(width/2, height/2)

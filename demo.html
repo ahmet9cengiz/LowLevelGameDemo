@@ -9,6 +9,7 @@
         }
     </style>
     <script src = "constants.js"></script>
+    <script src = "Collision.js"></script>
     <script src = "Game.js"></script>
     <script src = "Sprite.js"></script>
 
@@ -16,7 +17,9 @@
     <script>
         function initialize(){
             game = new Game();
-            ball = new Ball("./ball.png", 100, 100, game.canvas.width, game.canvas.height);
+            ship = new Ship("./smallBall.png", 50, 50, game.canvas.width, game.canvas.height);
+            ball = new Ball("./smallBall.png", 30, 30, game.canvas.width, game.canvas.height);
+            game.addSprite(ship);
             game.addSprite(ball);
             game.start();
         }
@@ -24,12 +27,33 @@
         function update(){
             game.clear();
             ball.checkKeys();
+            ship.checkKeys();
             game.updateSprites();
         }
 
+        function Ship(imageUrl, w, h, cW, cH){
+            tShip = new Sprite(imageUrl, w, h, cW, cH);
 
-        function Ball(){
-            tBall = new Sprite("./ball.png", 100, 100, game.canvas.width, game.canvas.height);
+            //tShip.collisionStyle = "BOX";
+            tShip.checkKeys = function(){
+                if(keysPressed[K_A]){
+                    tShip.x -= 10;
+                }
+                if(keysPressed[K_D]){
+                    tShip.x += 10;
+                }
+                if(keysPressed[K_W]){
+                    tShip.y -= 10;
+                }
+                if(keysPressed[K_S]){
+                    tShip.y += 10;
+                }
+            };
+            return tShip;
+        }
+
+        function Ball(imageUrl, w, h, cW, cH){
+            tBall = new Sprite(imageUrl, w, h, cW, cH);
 
             tBall.checkKeys = function(){
                 if(keysPressed[K_LEFT]){
